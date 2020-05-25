@@ -1,0 +1,95 @@
+@startuml
+
+hide circle
+skinparam linetype ortho
+
+entity "TipeTransaksi(Dimensi)" as tipe_transaksi {
+    * id : int
+    tipetransaksi : varchar(100)
+}
+
+entity "Supplier(Dimensi)" as supplier {
+    * id : int
+    supplier : varchar(100)
+    noTelp : varchar(13)
+    email : varchar(50)
+    alamat : text
+    negara : varchar(50)
+}
+
+entity "MetodePembayaran(Dimesi)" as metode_pembayaran {
+    * id : int
+    metodePembayaran : varchar(50)
+}
+
+entity "MetodePengiriman(Dimensi)" as metode_pengiriman {
+    * id : int
+    metodePengiriman : varchar(50)
+}
+
+entity "Transaksi(Fakta)" as transaksi {
+    * id : int
+    tanggal : int <<FK>>
+    tipeTransaksi : int <<FK>>
+    supplier : int <<FK>>
+    metodePembayaran : int <<FK>>
+    metodePengiriman : int <<FK>>
+    customer : int <<FK>>
+    total : int
+    pajak : int
+    totalDenganPajak : int
+}
+
+entity "Tanggal(Dimensi)" as tanggal {
+    * id : int
+    tanggal : int
+    bulan : int
+    tahun : int
+}
+
+entity "Customer(Dimensi)" as customer {
+    * id : int
+    nama : varchar(100)
+    noTelp : varchar(13)
+    email : varchar(50)
+    alamat : text
+    negara : varchar(50)
+}
+
+entity "Penjualan(Fakta)" as penjualan {
+    * id : int
+    customer : int <<FK>>
+    tanggal : int <<FK>>
+    pegawai : int <<FK>>
+    produk : int <<FK>>
+    jumlah : int 
+}
+
+entity "Pegawai(Dimensi)" as pegawai {
+    * id : int
+    nama : varchar(100)
+    noTelp : varchar(13)
+    alamat : text
+    email : varchar(50)
+    jenisPegawai : varchar(50)
+}
+
+entity "Produk(Dimensi)" as produk {
+    * id : int
+    nama : varchar(100)
+    harga : int
+    kategori : varchar(50)
+}
+
+tipe_transaksi ||..|{ transaksi
+supplier ||..|{ transaksi
+metode_pembayaran ||..|{ transaksi
+metode_pengiriman ||..|{ transaksi
+customer ||..|{ transaksi
+tanggal ||..|{ transaksi
+customer ||..|{ penjualan
+tanggal ||..|{ penjualan
+pegawai ||..|{ penjualan
+produk ||..|{ penjualan
+
+@enduml

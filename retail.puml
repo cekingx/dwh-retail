@@ -1,0 +1,94 @@
+@startuml
+
+' hide the spot
+hide circle
+
+' avoiding problems with angled crows feet
+skinparam linetype ortho
+
+entity "TransactionType(Dimension)" as transaction_type {
+    * id : INT
+    TransactionType : VARCHAR(50)
+}
+
+entity "Supplier(Dimension)" as supplier {
+    * id : INT
+    Supplier : VARCHAR(100)
+    Category : VARCHAR(100)
+}
+
+entity "PaymentMethod(Dimension)" as payment_method {
+    * id : INT
+    PaymentMethod : VARCHAR(100)
+}
+
+entity "Transaction(Fact)" as transaction {
+    * id : INT
+    Date : INT <<FK>>
+    TransactionType : INT <<FK>>
+    Supplier : INT <<FK>>
+    PaymentMethod : INT <<FK>>
+    Customer : INT <<FK>>
+    Total : FLOAT
+    Tax : FLOT
+    TotalIncludingTax : FLOAT
+}
+
+entity "Customer(Dimension)" as customer {
+    * id : INT
+    Name : VARCHAR(100)
+    Address : TEXT
+}
+
+entity "Date(Dimension)" as date {
+    * id : INT
+    Day : INT
+    Month : VARCHAR(50)
+    Year : INT
+}
+
+entity "Sale(Fact)" as sale {
+    * id : INT
+    Customer : INT <<FK>>
+    Date : INT <<FK>>
+    City : INT <<FK>>
+    Employee : INT <<FK>>
+    StockItem : INT <<FK>>
+} 
+
+entity "City(Dimension)" as city {
+    * id : INT
+    City : VARCHAR(100)
+    State : VARCHAR(100)
+    PostalCode : VARCHAR(50)
+}
+
+entity "Employee(Dimension)" as employee {
+    * id : INT
+    Name : VARCHAR(100)
+}
+
+entity "StockItem(Dimension)" as stock_item {
+    * id : INT
+    Item : VARCHAR(100)
+    Color : VARCHAR(100)
+}
+
+transaction_type ||..|{ transaction
+supplier ||..|{ transaction
+payment_method ||..|{ transaction
+customer ||..|{ transaction
+date ||..|{ transaction
+customer ||..|{ sale
+date ||..|{ sale
+city ||..|{ sale
+employee ||..|{ sale
+stock_item ||..|{ sale
+
+
+@enduml
+
+
+
+
+
