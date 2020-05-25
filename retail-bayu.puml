@@ -1,0 +1,128 @@
+@startuml
+
+hide circle
+skinparam linetype ortho
+
+entity "DimensiCustomer" as customer {
+    * id_customer
+    nama
+    no_telp
+    email
+    alamat
+    negara
+}
+
+entity "DimensiWaktuTransaksiCustomer" as waktu_customer {
+    * id_waktu_transaksi
+    tanggal_pemesanan
+    tangal_pembayaran
+    tanggal_terima
+}
+
+entity "FaktaTransaksiCustomer" as transaksi_customer {
+    * id_fakta_transaksi_customer
+    id_customer <<FK>>
+    id_waktu_transaksi <<FK>>
+    id_pegawai <<FK>>
+    id_produk <<FK>>
+    id_metode_transaksi <<FK>>
+    jumlah_transaksi
+}
+
+entity "DimensiPegawai" as pegawai {
+    * id_pegawai
+    departemen
+    nama
+    no_telp
+    email
+    alamat
+    negara
+}
+
+entity "DimensiProduk" as produk {
+    * id_produk
+    nama_produk
+    dimensi_produk
+    harga
+    stok
+    tgl_kadaluarsa
+}
+
+entity "DimensiMetodePembayaran" as metode_pembayaran {
+    * id_metode_pembayaran
+    nama_pembayaran
+}
+
+entity "FaktaPenggajian" as penggajian {
+    * id_fakta_penggajian
+    id_pegawai <<FK>>
+    id_waktu_kerja <<FK>>
+    id_gaji_pegawai <<FK>>
+    id_metode_pembayaran <<FK>>
+    total_gaji_pegawai
+}
+
+entity "FaktaTransaksiPengadaan" as transaksi_pengadaan {
+    * id_fakta_transaksi_pengadaan
+    id_pegawai <<FK>>
+    id_waktu_transaksi_barang <<FK>>
+    id_produk <<FK>>
+    id_metode_pembayaran <<FK>>
+    id_supplier <<FK>>
+    jumlah_transaksi_barang
+}
+
+entity "DimensiWaktuKerja" as waktu_kerja {
+    * id_waktu_kerja
+    jam_masuk
+    jam_keluar
+}
+
+entity "DimensiGajiPegawai" as gaji_pegawai {
+    * id_gaji_pegawai
+    gaji_pokok
+    tunjangan
+    bonus
+    keterangan
+}
+
+entity "DimensiWaktuTransaksiPengandaan" as waktu_pengadaan {
+    * id_waktu_transaksi_barang
+    tanggal_pemesanan
+    tanggal_pembayaran
+    tanggal_terima
+}
+
+entity "DimensiSupplier" as supplier {
+    * id_supplier
+    nama_supplier
+    no_telp
+    email
+    alamat
+    toko
+    negara
+}
+
+customer ||..|{ transaksi_customer
+waktu_customer ||..|{ transaksi_customer
+pegawai ||..|{ transaksi_customer
+produk ||..|{ transaksi_customer
+metode_pembayaran ||..|{ transaksi_customer
+pegawai ||..|{ penggajian
+waktu_kerja ||..|{ penggajian
+gaji_pegawai ||..|{ penggajian
+pegawai ||..|{ transaksi_pengadaan
+produk ||..|{ transaksi_pengadaan
+metode_pembayaran ||..|{ transaksi_pengadaan
+waktu_pengadaan ||..|{ transaksi_pengadaan
+supplier ||..|{ transaksi_pengadaan
+
+@enduml
+
+
+
+
+
+
+
+
