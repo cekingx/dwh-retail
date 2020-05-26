@@ -31,7 +31,7 @@ entity "FaktaTransaksiCustomer" as transaksi_customer {
 
 entity "DimensiPegawai" as pegawai {
     * id_pegawai
-    departemen
+    id_departemen <<FK>>
     nama
     no_telp
     email
@@ -39,13 +39,34 @@ entity "DimensiPegawai" as pegawai {
     negara
 }
 
+entity "DimensiDepartemenPegawai" as departemen_pegawai {
+    * id_departemen_pegawai
+    departemen
+}
+
 entity "DimensiProduk" as produk {
     * id_produk
+    id_kategori_produk <<FK>>
+    id_stok_produk <<FK>>
     nama_produk
-    dimensi_produk
     harga
-    stok
     tgl_kadaluarsa
+}
+
+entity "DimensiKategoriProduk" as kategori_produk {
+    * id_kategori_produk
+    kategori_produk
+}
+
+entity "DimensiStok" as stok_produk {
+    * id_stok_produk
+    id_waktu_stok <<FK>>
+    stok
+}
+
+entity "DimensiWaktuStok" as waktu_stok {
+    * id_waktu_stok
+    tanggal
 }
 
 entity "DimensiMetodePembayaran" as metode_pembayaran {
@@ -118,6 +139,11 @@ produk ||..|{ transaksi_pengadaan
 metode_pembayaran ||..|{ transaksi_pengadaan
 waktu_pengadaan ||..|{ transaksi_pengadaan
 supplier ||..|{ transaksi_pengadaan
+
+kategori_produk ||..|{ produk
+stok_produk ||..|{ produk
+departemen_pegawai ||..|{ pegawai
+waktu_stok ||..|{ stok_produk
 
 @enduml
 
