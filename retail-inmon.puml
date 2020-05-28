@@ -101,10 +101,21 @@ entity "DimensiWaktuKerja" as waktu_kerja {
 
 entity "DimensiGajiPegawai" as gaji_pegawai {
     * id_gaji_pegawai
+    id_bonus_gaji <<FK>>
     gaji_pokok
     tunjangan
-    bonus
     keterangan
+}
+
+entity "DimensiBonusGaji" as bonus_gaji {
+    * id_bonus_gaji
+    id_waktu_bonus <<FK>>
+    bonus
+}
+
+entity "DimensiWaktuBonus" as waktu_bonus {
+    * id_waktu_bonus
+    tanggal
 }
 
 entity "DimensiWaktuTransaksiPengandaan" as waktu_pengadaan {
@@ -133,6 +144,8 @@ metode_pembayaran ||..|{ transaksi_customer
 pegawai ||..|{ penggajian
 waktu_kerja ||..|{ penggajian
 gaji_pegawai ||..|{ penggajian
+bonus_gaji ||..|{ gaji_pegawai
+waktu_bonus ||..|{ bonus_gaji
 
 pegawai ||..|{ transaksi_pengadaan
 produk ||..|{ transaksi_pengadaan
