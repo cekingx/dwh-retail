@@ -1,0 +1,122 @@
+@startuml
+
+hide circle
+skinparam linetype ortho
+
+entity "DimensiAnggota" as anggota {
+    * id_anggota
+    nama
+    alamat
+    jurusan
+    no_telp
+}
+
+entity "DimensiPetugas" as petugas {
+    * id_petugas
+    id_jabatan <<FK>>
+    nama
+    jenis_kelamin
+    alamat
+}
+
+entity "DimensiJabatan" as jabatan {
+    * id_jabatan
+    jabatan
+}
+
+entity "DimensiBuku" as buku {
+    * id_buku
+    id_rak <<FK>>
+    id_kategori <<FK>>
+    id_penerbit <<FK>>
+    id_penulis <<FK>>
+    id_tahun_terbit <<FK>>
+    judul
+}
+
+entity "DimensiRak" as rak {
+    * id_rak
+    no_rak
+    jenis_rak
+}
+
+entity "DimensiKategori" as kategori {
+    * id_kategori
+    kategori
+}
+
+entity "DimensiPenerbit" as penerbit {
+    * id_penerbit
+    penerbit
+}
+
+entity "DimensiPenulis" as penulis {
+    * id_penulis
+    penulis
+}
+
+entity "DimensiTahunTerbit" as tahun_terbit {
+    * id_tahun_tebit
+    tahun_terbit
+}
+
+entity "DimensiTanggalPeminjaman" as tanggal_peminjaman {
+    * id_tanggal_peminjaman
+    tanggal_peminjaman
+}
+
+entity "DimensiTanggalPengembalian" as tanggal_pengembalian {
+    * id_tanggal_pengembalian
+    tanggal_pengembalian
+}
+
+entity "DimensiTanggalHarusKembali" as tanggal_harus_kembali {
+    * id_tanggal_harus_kembali
+    tanggal_harus_kembali
+}
+
+entity "DimensiStatusPengembalian" as status_pengembalian {
+    * id_status_pengembalian
+    status_pengembalian
+}
+
+entity "FaktaPeminjaman" as peminjaman {
+    * id_fakta_peminjaman
+    id_buku <<FK>>
+    id_petugas <<FK>>
+    id_anggota <<FK>>
+    id_tanggal_peminjaman <<FK>>
+    id_tanggal_harus_kembali <<FK>>
+}
+
+entity "FaktaPengembalian" as pengembalian {
+    * id_fakta_pengembalian
+    id_buku <<FK>>
+    id_petugas <<FK>>
+    id_anggota <<FK>>
+    id_tanggal_pengembalian <<FK>>
+    id_status_pengembalian <<FK>>
+    denda
+}
+
+jabatan ||..|{ petugas
+
+rak ||..|{ buku
+kategori ||..|{ buku
+penerbit ||..|{ buku
+penulis ||..|{ buku
+tahun_terbit ||..|{ buku
+
+buku ||..|{ peminjaman
+petugas ||..|{ peminjaman
+anggota ||..|{ peminjaman
+tanggal_peminjaman ||..|{ peminjaman
+tanggal_harus_kembali ||..|{ peminjaman
+
+buku ||..|{ pengembalian
+petugas ||..|{ pengembalian
+anggota ||..|{ pengembalian
+tanggal_pengembalian ||..|{ pengembalian
+status_pengembalian ||..|{ pengembalian
+
+@enduml
